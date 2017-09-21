@@ -3,13 +3,13 @@ package com.wangxiandeng.classreader.constantinfo;
 import com.wangxiandeng.classreader.ConstantInfo;
 import com.wangxiandeng.classreader.basictype.U2;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UTFDataFormatException;
 
 /**
  * Created by wangxiandeng on 2017/1/25.
+ * 字符串常量类
  */
 public class ConstantUtf8 extends ConstantInfo {
     public String value;
@@ -30,21 +30,21 @@ public class ConstantUtf8 extends ConstantInfo {
         }
     }
 
-    private String readUtf8(byte[] bytearr) throws UTFDataFormatException {
+    private String readUtf8(byte[] byteArr) throws UTFDataFormatException {
         int c, char2, char3;
         int count = 0;
         int chararr_count = 0;
-        char[] chararr = new char[bytearr.length];
+        char[] chararr = new char[byteArr.length];
 
-        while (count < bytearr.length) {
-            c = (int) bytearr[count] & 0xff;
+        while (count < byteArr.length) {
+            c = (int) byteArr[count] & 0xff;
             if (c > 127) break;
             count++;
             chararr[chararr_count++] = (char) c;
         }
 
-        while (count < bytearr.length) {
-            c = (int) bytearr[count] & 0xff;
+        while (count < byteArr.length) {
+            c = (int) byteArr[count] & 0xff;
             switch (c >> 4) {
                 case 0:
                 case 1:
@@ -62,10 +62,10 @@ public class ConstantUtf8 extends ConstantInfo {
                 case 13:
                     /* 110x xxxx   10xx xxxx*/
                     count += 2;
-                    if (count > bytearr.length)
+                    if (count > byteArr.length)
                         throw new UTFDataFormatException(
                                 "malformed input: partial character at end");
-                    char2 = (int) bytearr[count - 1];
+                    char2 = (int) byteArr[count - 1];
                     if ((char2 & 0xC0) != 0x80)
                         throw new UTFDataFormatException(
                                 "malformed input around byte " + count);
@@ -75,11 +75,11 @@ public class ConstantUtf8 extends ConstantInfo {
                 case 14:
                     /* 1110 xxxx  10xx xxxx  10xx xxxx */
                     count += 3;
-                    if (count > bytearr.length)
+                    if (count > byteArr.length)
                         throw new UTFDataFormatException(
                                 "malformed input: partial character at end");
-                    char2 = (int) bytearr[count - 2];
-                    char3 = (int) bytearr[count - 1];
+                    char2 = (int) byteArr[count - 2];
+                    char3 = (int) byteArr[count - 1];
                     if (((char2 & 0xC0) != 0x80) || ((char3 & 0xC0) != 0x80))
                         throw new UTFDataFormatException(
                                 "malformed input around byte " + (count - 1));

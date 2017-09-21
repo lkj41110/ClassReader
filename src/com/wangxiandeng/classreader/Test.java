@@ -5,7 +5,10 @@ package com.wangxiandeng.classreader;
  */
 public class Test {
     public static void main(String[] args) {
-        ClassReader.read("/Users/wangxiandeng/Documents/MyCoding/IdeaProjects/myhttp/out/production/myhttp/com/wangxiandeng/http/Response.class");
+
+        ClassReader classReader = new ClassReader();
+        classReader.read("out/production/ClassReader/com/wangxiandeng/classreader/Test.class");
+
     }
 
 }

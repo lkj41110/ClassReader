@@ -11,6 +11,7 @@ import java.io.InputStream;
 
 /**
  * Created by wangxiandeng on 2017/1/25.
+ *
  */
 public class AttributeInfo extends BasicInfo {
     public int nameIndex;

@@ -8,6 +8,7 @@ import java.io.InputStream;
 
 /**
  * Created by wangxiandeng on 2017/1/25.
+ * 成员类
  */
 public class MemberInfo extends BasicInfo {
     public int accessFlags;
