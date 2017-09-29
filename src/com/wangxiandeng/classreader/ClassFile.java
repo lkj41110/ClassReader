@@ -25,7 +25,6 @@ public class ClassFile {
         System.out.println("classname: " + this.className);
         System.out.println("superclass:" + this.superClass);
 
-
         return "ClassFile{}";
     }
 }
